@@ -1,0 +1,56 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+directive @goTag(
+  key: String!
+  value: String
+) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
+directive @goField(
+  forceResolver: Boolean
+  name: String
+) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+type Todo {
+  id: ID!
+    @goTag(
+      key: "gorm"
+      value: "primary_key;type:uuid;default:gen_random_uuid()"
+    )
+  text: String!
+  done: Boolean!
+  userID: String!
+}
+
+type User {
+  id: ID!
+  name: String!
+  todos: [Todo!]!
+    @goField(forceResolver: true)
+    @goTag(key: "gorm", value: "foreignKey:UserID;references:ID")
+}
+
+input CreateTodoInput {
+  text: String!
+  userId: String!
+}
+
+input CreateUserInput {
+  id: String!
+  name: String!
+}
+
+type Query {
+  todos: [Todo!]!
+  users: [User!]!
+  user(id: String!): User!
+  todo(id: String!): [Todo!]!
+}
+
+type Mutation {
+  createTodo(input: CreateTodoInput!): Todo!
+  createUser(input: CreateUserInput!): User!
+  deleteTodo(id: ID!): Todo!
+  deleteUser(id: ID!): User!
+}
