@@ -28,7 +28,8 @@ CREATE TABLE public.todos (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     text character varying(255),
     done boolean DEFAULT false,
-    user_id uuid,
+    -- user_id uuid,
+    user_id character varying(255),
     created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
 );
 
@@ -40,7 +41,8 @@ ALTER TABLE public.todos OWNER TO postgres;
 --
 
 CREATE TABLE public.users (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    -- id uuid DEFAULT gen_random_uuid() NOT NULL,
+    id uuid character varying(255) NOT NULL UNIQUE,
     name character varying(255),
     created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
 );
