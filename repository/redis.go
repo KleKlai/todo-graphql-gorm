@@ -1,5 +1,5 @@
 package repository
 
-func connect_redis() *redis.Client {
+// func connect_redis() *redis.Client {
 
-}
+// }

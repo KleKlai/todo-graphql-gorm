@@ -13,3 +13,7 @@ func NewService(repoService repository.Repository) *Service {
 		repoService: repoService,
 	}
 }
+
+// func (e *errorString) Error() string {
+// 	return e.s
+// }

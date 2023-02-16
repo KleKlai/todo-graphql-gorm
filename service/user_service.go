@@ -9,6 +9,10 @@ func (s *Service) CreateUser(user *model.CreateUserInput) (*model.User, error) {
 		Name: user.Name,
 	}
 
+	// if user.ID == "" {
+	// 	return nil, error("ID is required")
+	// }
+
 	res, err := s.repoService.CreateUser(u)
 
 	if err != nil {
