@@ -15,14 +15,19 @@ func connect_db() *gorm.DB {
 
 	err := godotenv.Load()
 
+	DB_USER := os.Getenv("DB_USERNAME")
+	DB_PASSWORD := os.Getenv("DB_PASSWORD")
+	DB_HOST := os.Getenv("DB_HOST")
+	DB_PORT := os.Getenv("DB_PORT")
+	DB_DATABASE := os.Getenv("DB_DATABASE")
+	DB_SSLMODE := os.Getenv("DB_SSLMODE")
+	DB_TIMEZONE := os.Getenv("DB_TIMEZONE")
+
 	if err != nil {
 		log.Fatalf("Error loading .env file")
 	}
 
-	// source := "host=" + os.Getenv("DB_HOST") + " user=" + os.Getenv("DB_USERNAME") + " password=" + os.Getenv("DB_PASSWORD") + " dbname=" + os.Getenv("DB_DATABASE") + " port=" + os.Getenv("DB_PORT") + " sslmode=disable TimeZone=Asia/Shanghai"
-
-	source := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s&TimeZone=%s",
-		os.Getenv("DB_USERNAME"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_DATABASE"), "disable", "Asia/Shanghai")
+	source := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s&TimeZone=%s", DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_DATABASE, DB_SSLMODE, DB_TIMEZONE)
 
 	db, err := gorm.Open(postgres.Open(source), &gorm.Config{})
 
