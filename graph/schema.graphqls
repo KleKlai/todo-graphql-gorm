@@ -36,16 +36,27 @@ input CreateTodoInput {
   userId: String!
 }
 
+type UpdateTodoDone {
+  id: ID!
+  done: Boolean!
+}
+
 input CreateUserInput {
   id: String!
   name: String!
+}
+
+input UpdateTodoDoneInput {
+  id: ID!
+  done: Boolean!
 }
 
 type Query {
   todos: [Todo!]!
   users: [User!]!
   user(id: String!): User!
-  todo(id: String!): [Todo!]!
+  todo(id: String!): Todo!
+  getTodoOfUserByStatus(userId: String!, done: Boolean!): [Todo!]!
 }
 
 type Mutation {
@@ -53,4 +64,5 @@ type Mutation {
   createUser(input: CreateUserInput!): User!
   deleteTodo(id: ID!): Todo!
   deleteUser(id: ID!): User!
+  updateTodoDone(input: UpdateTodoDoneInput!): UpdateTodoDone!
 }

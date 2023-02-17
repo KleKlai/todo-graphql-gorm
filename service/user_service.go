@@ -1,17 +1,24 @@
 package service
 
-import "github.com/kleklai/todoAppv1/graph/model"
+import (
+	"fmt"
+
+	"github.com/kleklai/todoAppv1/graph/model"
+)
 
 func (s *Service) CreateUser(user *model.CreateUserInput) (*model.User, error) {
+
+	_, err := s.repoService.GetUser(user.ID)
+
+	// Validate if the use is already exist
+	if err == nil {
+		return nil, fmt.Errorf("User with id %s already exists", user.ID)
+	}
 
 	u := model.User{
 		ID:   user.ID,
 		Name: user.Name,
 	}
-
-	// if user.ID == "" {
-	// 	return nil, error("ID is required")
-	// }
 
 	res, err := s.repoService.CreateUser(u)
 
@@ -24,6 +31,10 @@ func (s *Service) CreateUser(user *model.CreateUserInput) (*model.User, error) {
 
 func (s *Service) GetUser(id string) (*model.User, error) {
 
+	if id == "" {
+		return nil, fmt.Errorf("ID is empty")
+	}
+
 	res, err := s.repoService.GetUser(id)
 
 	if err != nil {
@@ -34,6 +45,10 @@ func (s *Service) GetUser(id string) (*model.User, error) {
 }
 
 func (s *Service) DeleteUser(id string) (*model.User, error) {
+
+	if id == "" {
+		return nil, fmt.Errorf("ID is empty")
+	}
 
 	res, err := s.repoService.DeleteUser(id)
 

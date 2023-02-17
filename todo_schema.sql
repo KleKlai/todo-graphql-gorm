@@ -42,7 +42,7 @@ ALTER TABLE public.todos OWNER TO postgres;
 
 CREATE TABLE public.users (
     -- id uuid DEFAULT gen_random_uuid() NOT NULL,
-    id uuid character varying(255) NOT NULL UNIQUE,
+    id character varying(255) NOT NULL UNIQUE,
     name character varying(255),
     created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
 );

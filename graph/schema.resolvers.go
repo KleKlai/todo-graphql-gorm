@@ -55,6 +55,17 @@ func (r *mutationResolver) DeleteUser(ctx context.Context, id string) (*model.Us
 	return res, nil
 }
 
+// UpdateTodoDone is the resolver for the updateTodoDone field.
+func (r *mutationResolver) UpdateTodoDone(ctx context.Context, input model.UpdateTodoDoneInput) (*model.UpdateTodoDone, error) {
+	res, err := r.Service.UpdateTodoDone(&input)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}
+
 // Todos is the resolver for the todos field.
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	panic(fmt.Errorf("not implemented: Todos - todos"))
@@ -67,7 +78,6 @@ func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 
 // User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-
 	res, err := r.Service.GetUser(id)
 
 	if err != nil {
@@ -78,13 +88,30 @@ func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error
 }
 
 // Todo is the resolver for the todo field.
-func (r *queryResolver) Todo(ctx context.Context, id string) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: Todo - todo"))
+func (r *queryResolver) Todo(ctx context.Context, id string) (*model.Todo, error) {
+
+	res, err := r.Service.GetTodoByID(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}
+
+// GetTodoOfUserByStatus is the resolver for the getTodoOfUserByStatus field.
+func (r *queryResolver) GetTodoOfUserByStatus(ctx context.Context, userID string, done bool) ([]*model.Todo, error) {
+	res, err := r.Service.GetTodoOfUserByStatus(userID, done)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
 }
 
 // Todos is the resolver for the todos field.
 func (r *userResolver) Todos(ctx context.Context, obj *model.User) ([]*model.Todo, error) {
-
 	res, err := r.Service.GetTodoByUser(obj.ID)
 
 	if err != nil {
