@@ -23,7 +23,7 @@ func (s *Service) CreateUser(user *model.CreateUserInput) (*model.User, error) {
 	res, err := s.repoService.CreateUser(u)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Error creating user: %v", err)
 	}
 
 	return res, nil
@@ -38,7 +38,7 @@ func (s *Service) GetUser(id string) (*model.User, error) {
 	res, err := s.repoService.GetUser(id)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("User not found")
 	}
 
 	return res, nil
@@ -50,10 +50,14 @@ func (s *Service) DeleteUser(id string) (*model.User, error) {
 		return nil, fmt.Errorf("ID is empty")
 	}
 
+	if _, err := s.repoService.GetUser(id); err != nil {
+		return nil, fmt.Errorf("User not found")
+	}
+
 	res, err := s.repoService.DeleteUser(id)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("User not found")
 	}
 
 	return res, nil

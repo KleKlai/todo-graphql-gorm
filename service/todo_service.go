@@ -31,7 +31,7 @@ func (s *Service) GetTodoByID(id string) (*model.Todo, error) {
 	res, err := s.repoService.GetTodoByID(id)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Todo not found")
 	}
 
 	return res, nil
@@ -48,7 +48,7 @@ func (s *Service) GetTodoByUser(userID string) ([]*model.Todo, error) {
 	todos, err := s.repoService.GetTodoByUser(userID)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Todo not found")
 	}
 
 	return todos, nil
@@ -60,12 +60,16 @@ func (s *Service) GetTodoOfUserByStatus(userID string, done bool) ([]*model.Todo
 		return nil, fmt.Errorf("User ID is empty")
 	}
 
+	if _, err := s.repoService.GetUser(userID); err != nil {
+		return nil, fmt.Errorf("User not found")
+	}
+
 	var todos []*model.Todo
 
 	todos, err := s.repoService.GetTodoOfUserByStatus(userID, done)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Todo not found")
 	}
 
 	return todos, nil
@@ -84,7 +88,7 @@ func (s *Service) DeleteTodo(id string) (*model.Todo, error) {
 	res, err := s.repoService.DeleteTodo(id)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Todo not found. Nothing to delete")
 	}
 
 	return res, nil
@@ -105,7 +109,7 @@ func (s *Service) UpdateTodoDone(todo *model.UpdateTodoDoneInput) (*model.Update
 	res, err := s.repoService.UpdateTodoDone(u)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Todo not found")
 	}
 
 	updateTodoDone := model.UpdateTodoDone{
