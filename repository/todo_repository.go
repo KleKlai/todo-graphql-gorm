@@ -64,3 +64,17 @@ func (r *Repository) UpdateTodoDone(todo model.Todo) (*model.Todo, error) {
 
 	return &todo, nil
 }
+
+func (r *Repository) UpdateTodoTask(todo model.Todo) (*model.Todo, error) {
+
+	t := model.Todo{
+		ID:   todo.ID,
+		Task: todo.Task,
+	}
+
+	if err := r.db.Model(&todo).Where("id = ?", t.ID).Update("task", t.Task).Error; err != nil {
+		return nil, err
+	}
+
+	return &todo, nil
+}

@@ -18,7 +18,7 @@ type Todo {
       key: "gorm"
       value: "primary_key;type:uuid;default:gen_random_uuid()"
     )
-  text: String!
+  task: String!
   done: Boolean!
   userID: String!
 }
@@ -32,13 +32,18 @@ type User {
 }
 
 input CreateTodoInput {
-  text: String!
+  task: String!
   userId: String!
 }
 
 type UpdateTodoDone {
   id: ID!
   done: Boolean!
+}
+
+type UpdateTodoTask {
+  id: ID!
+  task: String!
 }
 
 input CreateUserInput {
@@ -49,6 +54,11 @@ input CreateUserInput {
 input UpdateTodoDoneInput {
   id: ID!
   done: Boolean!
+}
+
+input UpdateTodoTaskInput {
+  id: ID!
+  task: String!
 }
 
 type Query {
@@ -65,4 +75,5 @@ type Mutation {
   deleteTodo(id: ID!): Todo!
   deleteUser(id: ID!): User!
   updateTodoDone(input: UpdateTodoDoneInput!): UpdateTodoDone!
+  updateTodoTask(input: UpdateTodoTaskInput!): UpdateTodoTask!
 }

@@ -9,7 +9,7 @@ import (
 	"github.com/kleklai/todoAppv1/service"
 )
 
-const defaultPort = ":8080"
+const defaultPort = ":8081"
 
 func graphHandler() gin.HandlerFunc {
 

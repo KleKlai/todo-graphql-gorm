@@ -3,7 +3,7 @@
 package model
 
 type CreateTodoInput struct {
-	Text   string `json:"text"`
+	Task   string `json:"task"`
 	UserID string `json:"userId"`
 }
 
@@ -14,7 +14,7 @@ type CreateUserInput struct {
 
 type Todo struct {
 	ID     string `json:"id" gorm:"primary_key;type:uuid;default:gen_random_uuid()"`
-	Text   string `json:"text"`
+	Task   string `json:"task"`
 	Done   bool   `json:"done"`
 	UserID string `json:"userID"`
 }
@@ -27,6 +27,16 @@ type UpdateTodoDone struct {
 type UpdateTodoDoneInput struct {
 	ID   string `json:"id"`
 	Done bool   `json:"done"`
+}
+
+type UpdateTodoTask struct {
+	ID   string `json:"id"`
+	Task string `json:"task"`
+}
+
+type UpdateTodoTaskInput struct {
+	ID   string `json:"id"`
+	Task string `json:"task"`
 }
 
 type User struct {
