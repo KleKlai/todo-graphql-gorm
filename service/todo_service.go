@@ -37,7 +37,7 @@ func (s *Service) GetTodoByID(id string) (*model.Todo, error) {
 	return res, nil
 }
 
-func (s *Service) GetTodoByUser(userID string) ([]*model.Todo, error) {
+func (s *Service) GetTodoByUserID(userID string) ([]*model.Todo, error) {
 
 	if userID == "" {
 		return nil, fmt.Errorf("User ID is empty")
@@ -45,7 +45,7 @@ func (s *Service) GetTodoByUser(userID string) ([]*model.Todo, error) {
 
 	var todos []*model.Todo
 
-	todos, err := s.repoService.GetTodoByUser(userID)
+	todos, err := s.repoService.GetTodoByUserID(userID)
 
 	if err != nil {
 		return nil, fmt.Errorf("Todo not found")

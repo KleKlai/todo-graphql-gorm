@@ -21,7 +21,7 @@ func (r *Repository) GetTodoByID(id string) (*model.Todo, error) {
 	return &todo, nil
 }
 
-func (r *Repository) GetTodoByUser(userID string) ([]*model.Todo, error) {
+func (r *Repository) GetTodoByUserID(userID string) ([]*model.Todo, error) {
 	var todos []*model.Todo
 
 	if err := r.db.Where("user_id = ?", userID).Order("created_at desc").Find(&todos).Error; err != nil {

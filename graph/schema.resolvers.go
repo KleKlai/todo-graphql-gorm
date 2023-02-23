@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/kleklai/todoAppv1/graph/model"
 )
@@ -68,7 +67,6 @@ func (r *mutationResolver) UpdateTodoDone(ctx context.Context, input model.Updat
 
 // UpdateTodoTask is the resolver for the updateTodoTask field.
 func (r *mutationResolver) UpdateTodoTask(ctx context.Context, input model.UpdateTodoTaskInput) (*model.UpdateTodoTask, error) {
-
 	res, err := r.Service.UpdateTodoTask(&input)
 
 	if err != nil {
@@ -79,13 +77,14 @@ func (r *mutationResolver) UpdateTodoTask(ctx context.Context, input model.Updat
 }
 
 // Todos is the resolver for the todos field.
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: Todos - todos"))
-}
+func (r *queryResolver) Todos(ctx context.Context, userID string) ([]*model.Todo, error) {
+	res, err := r.Service.GetTodoByUserID(userID)
 
-// Users is the resolver for the users field.
-func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented: Users - users"))
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
 }
 
 // User is the resolver for the user field.
@@ -99,19 +98,8 @@ func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error
 	return res, nil
 }
 
-// Todo is the resolver for the todo field.
-func (r *queryResolver) Todo(ctx context.Context, id string) (*model.Todo, error) {
-	res, err := r.Service.GetTodoByID(id)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return res, nil
-}
-
-// GetTodoOfUserByStatus is the resolver for the getTodoOfUserByStatus field.
-func (r *queryResolver) GetTodoOfUserByStatus(ctx context.Context, userID string, done bool) ([]*model.Todo, error) {
+// TodosOfUserByStatus is the resolver for the todosOfUserByStatus field.
+func (r *queryResolver) TodosOfUserByStatus(ctx context.Context, userID string, done bool) ([]*model.Todo, error) {
 	res, err := r.Service.GetTodoOfUserByStatus(userID, done)
 
 	if err != nil {
@@ -123,7 +111,7 @@ func (r *queryResolver) GetTodoOfUserByStatus(ctx context.Context, userID string
 
 // Todos is the resolver for the todos field.
 func (r *userResolver) Todos(ctx context.Context, obj *model.User) ([]*model.Todo, error) {
-	res, err := r.Service.GetTodoByUser(obj.ID)
+	res, err := r.Service.GetTodoByUserID(obj.ID)
 
 	if err != nil {
 		return nil, err

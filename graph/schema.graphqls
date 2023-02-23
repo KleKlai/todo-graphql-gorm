@@ -62,11 +62,9 @@ input UpdateTodoTaskInput {
 }
 
 type Query {
-  todos: [Todo!]!
-  users: [User!]!
+  todos(userID: String!): [Todo!]!
   user(id: String!): User!
-  todo(id: String!): Todo!
-  getTodoOfUserByStatus(userId: String!, done: Boolean!): [Todo!]!
+  todosOfUserByStatus(userId: String!, done: Boolean!): [Todo!]!
 }
 
 type Mutation {
