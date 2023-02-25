@@ -82,7 +82,7 @@ func TestGetUser(t *testing.T) {
 
 	service := NewService(*repository.NewRepository())
 
-	id := "5ycOZ54lCpPPuDdL-iGzLfwuHTbX"
+	id := "1234560142"
 
 	m.On("GetUser", id).Return(&model.User{}, nil).Once()
 
@@ -103,7 +103,7 @@ func TestDeleteUser(t *testing.T) {
 
 	service := NewService(*repository.NewRepository())
 
-	id := "5ycOZ54lCpPPuDdL-iGzLfwuHTbX"
+	id := "1234560142"
 
 	m.On("DeleteUser", id).Return(&model.User{}, nil).Once()
 
