@@ -17,7 +17,7 @@ type Todo {
     @goTag(
       key: "gorm"
       value: "primary_key;type:uuid;default:gen_random_uuid()"
-    )
+    ) 
   task: String!
   done: Boolean!
   userID: String!

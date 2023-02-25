@@ -5,7 +5,6 @@ go 1.20
 require (
 	github.com/99designs/gqlgen v0.17.24
 	github.com/gin-gonic/gin v1.8.2
-	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.8.1
 	github.com/vektah/gqlparser/v2 v2.5.1
 	gorm.io/driver/postgres v1.4.7

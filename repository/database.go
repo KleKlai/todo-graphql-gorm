@@ -3,9 +3,7 @@ package repository
 import (
 	"fmt"
 	"log"
-	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/kleklai/todoAppv1/graph/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -13,19 +11,27 @@ import (
 
 func connect_db() *gorm.DB {
 
-	err := godotenv.Load()
+	// err := godotenv.Load()
 
-	DB_USER := os.Getenv("DB_USERNAME")
-	DB_PASSWORD := os.Getenv("DB_PASSWORD")
-	DB_HOST := os.Getenv("DB_HOST")
-	DB_PORT := os.Getenv("DB_PORT")
-	DB_DATABASE := os.Getenv("DB_DATABASE")
-	DB_SSLMODE := os.Getenv("DB_SSLMODE")
-	DB_TIMEZONE := os.Getenv("DB_TIMEZONE")
+	// DB_USER := os.Getenv("DB_USERNAME")
+	// DB_PASSWORD := os.Getenv("DB_PASSWORD")
+	// DB_HOST := os.Getenv("DB_HOST")
+	// DB_PORT := os.Getenv("DB_PORT")
+	// DB_DATABASE := os.Getenv("DB_DATABASE")
+	// DB_SSLMODE := os.Getenv("DB_SSLMODE")
+	// DB_TIMEZONE := os.Getenv("DB_TIMEZONE")
 
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
+	DB_USER := "postgres"
+	DB_PASSWORD := "postgres"
+	DB_HOST := "localhost"
+	DB_PORT := "5432"
+	DB_DATABASE := "todo"
+	DB_SSLMODE := "disable"
+	DB_TIMEZONE := "Asia/Singapore"
+
+	// if err != nil {
+	// 	log.Fatalf("Error loading .env file")
+	// }
 
 	source := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s&TimeZone=%s", DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_DATABASE, DB_SSLMODE, DB_TIMEZONE)
 
