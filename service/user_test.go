@@ -49,48 +49,6 @@ func (m *RepositoryMock) DeleteUser(id string) (*model.User, error) {
 	return args.Get(0).(*model.User), args.Error(1)
 }
 
-func (m *RepositoryMock) CreateTodo(input model.CreateTodoInput) (*model.Todo, error) {
-
-	args := m.Called(input)
-	return args.Get(0).(*model.Todo), args.Error(1)
-}
-
-func (m *RepositoryMock) GetTodoByID(id string) (*model.Todo, error) {
-
-	args := m.Called(id)
-	return args.Get(0).(*model.Todo), args.Error(1)
-}
-
-func (m *RepositoryMock) GetTodoByUserID(id string) ([]*model.Todo, error) {
-
-	args := m.Called(id)
-	return args.Get(0).([]*model.Todo), args.Error(1)
-}
-
-func (m *RepositoryMock) GetTodoOfUserByStatus(id string, done bool) ([]*model.Todo, error) {
-
-	args := m.Called(id, done)
-	return args.Get(0).([]*model.Todo), args.Error(1)
-}
-
-func (m *RepositoryMock) UpdateTodoDone(todo model.Todo) (*model.Todo, error) {
-
-	args := m.Called(todo)
-	return args.Get(0).(*model.Todo), args.Error(1)
-}
-
-func (m *RepositoryMock) UpdateTodoTask(todo model.Todo) (*model.Todo, error) {
-
-	args := m.Called(todo)
-	return args.Get(0).(*model.Todo), args.Error(1)
-}
-
-func (m *RepositoryMock) DeleteTodo(id string) (*model.Todo, error) {
-
-	args := m.Called(id)
-	return args.Get(0).(*model.Todo), args.Error(1)
-}
-
 func TestCreateUser(t *testing.T) {
 
 	m := &RepositoryMock{}
@@ -116,4 +74,46 @@ func TestCreateUser(t *testing.T) {
 		m.AssertCalled(t, "CreateUser", user)
 		m.AssertExpectations(t)
 	})
+}
+
+func TestGetUser(t *testing.T) {
+
+	m := &RepositoryMock{}
+
+	service := NewService(*repository.NewRepository())
+
+	id := "5ycOZ54lCpPPuDdL-iGzLfwuHTbX"
+
+	m.On("GetUser", id).Return(&model.User{}, nil).Once()
+
+	res, err := service.GetUser(id)
+
+	assert.NotNil(t, res)
+	assert.NoError(t, err)
+
+	m.GetUser(id)
+
+	m.AssertCalled(t, "GetUser", id)
+	m.AssertExpectations(t)
+}
+
+func TestDeleteUser(t *testing.T) {
+
+	m := &RepositoryMock{}
+
+	service := NewService(*repository.NewRepository())
+
+	id := "5ycOZ54lCpPPuDdL-iGzLfwuHTbX"
+
+	m.On("DeleteUser", id).Return(&model.User{}, nil).Once()
+
+	res, err := service.DeleteUser(id)
+
+	assert.NotNil(t, res)
+	assert.NoError(t, err)
+
+	m.DeleteUser(id)
+
+	m.AssertCalled(t, "DeleteUser", id)
+	m.AssertExpectations(t)
 }
