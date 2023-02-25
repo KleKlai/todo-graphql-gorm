@@ -102,17 +102,18 @@ func TestCreateUser(t *testing.T) {
 		Name: "Maynard",
 	}
 
-	// t.Run("success", func(t *testing.T) {
-	m.On("CreateUser", user).Return(&model.User{
-		ID: user.ID,
-	}, nil).Once()
+	t.Run("success", func(t *testing.T) {
+		m.On("CreateUser", user).Return(&model.User{
+			ID: user.ID,
+		}, nil).Once()
 
-	res, err := service.CreateUser(&user)
+		res, err := service.CreateUser(&user)
 
-	assert.NotNil(t, res)
-	assert.NoError(t, err)
+		assert.NotNil(t, res)
+		assert.NoError(t, err)
+		m.CreateUser(user)
 
-	// m.AssertCalled(t, "CreateUser", user)
-	m.AssertExpectations(t)
-	// })
+		m.AssertCalled(t, "CreateUser", user)
+		m.AssertExpectations(t)
+	})
 }
