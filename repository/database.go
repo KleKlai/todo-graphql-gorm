@@ -3,9 +3,7 @@ package repository
 import (
 	"fmt"
 	"log"
-	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/kleklai/todoAppv1/graph/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -13,38 +11,38 @@ import (
 
 func connect_db() *gorm.DB {
 
-	var err = godotenv.Load()
+	// var err = godotenv.Load()
 
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
-
-	var (
-		dbUser     = os.Getenv("DB_USERNAME")
-		dbPassword = os.Getenv("DB_PASSWORD")
-		dbHost     = os.Getenv("DB_HOST")
-		dbPort     = os.Getenv("DB_PORT")
-		dbDatabase = os.Getenv("DB_DATABASE")
-		dbSsl      = os.Getenv("DB_SSLMODE")
-	)
+	// if err != nil {
+	// 	log.Fatalf("Error loading .env file")
+	// }
 
 	// var (
-	// 	dbUser     = "postgres"
-	// 	dbPassword = "postgres"
-	// 	dbHost     = "localhost"
-	// 	dbPort     = "5432"
-	// 	dbDatabase = "todo"
-	// 	dbSsl      = "disable"
+	// 	dbUser     = os.Getenv("DB_USERNAME")
+	// 	dbPassword = os.Getenv("DB_PASSWORD")
+	// 	dbHost     = os.Getenv("DB_HOST")
+	// 	dbPort     = os.Getenv("DB_PORT")
+	// 	dbDatabase = os.Getenv("DB_DATABASE")
+	// 	dbSsl      = os.Getenv("DB_SSLMODE")
 	// )
+
+	var (
+		dbUser     = "postgres"
+		dbPassword = "postgres"
+		dbHost     = "localhost"
+		dbPort     = "5432"
+		dbDatabase = "todo"
+		dbSsl      = "disable"
+	)
 
 	source := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s&TimeZone=%s", dbUser, dbPassword, dbHost, dbPort, dbDatabase, dbSsl, "Asia/Singapore")
 
 	db, err := gorm.Open(postgres.Open(source), &gorm.Config{})
 
 	if err != nil {
-		fmt.Println(source)
-		log.Fatal(err)
-		panic("failed to connect database")
+		log.Fatalf("Error connecting to database: %v", err)
+
+		return nil
 	}
 
 	return db

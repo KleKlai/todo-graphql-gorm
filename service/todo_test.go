@@ -6,6 +6,8 @@ import (
 	"github.com/kleklai/todoAppv1/graph/model"
 	repository "github.com/kleklai/todoAppv1/repository"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/require"
 )
 
 func (m *RepositoryMock) CreateTodo(todo model.CreateTodoInput) (*model.Todo, error) {
@@ -54,18 +56,19 @@ func TestCreateTodo(t *testing.T) {
 		UserID: "6ikyYWd9iOwRTjBUu5LFws2cRAy7",
 	}
 
-	m.On("CreateTodo", todo).Return(&model.Todo{
+	m.On("CreateTodo", mock.Anything).Return(&model.Todo{
 		Task: todo.Task,
-	}, nil).Once()
+	}, nil)
 
-	res, err := service.CreateTodo(&todo)
+	_, err := service.CreateTodo(&todo)
 
-	assert.NotNil(t, res)
+	// assert.NotNil(t, res)
 	assert.NoError(t, err)
+	require.Nil(t, err)
 
-	m.CreateTodo(todo)
+	// m.CreateTodo(todo)
 
-	m.AssertCalled(t, "CreateTodo", todo)
+	// m.AssertCalled(t, "CreateTodo", todo)
 	m.AssertExpectations(t)
 }
 

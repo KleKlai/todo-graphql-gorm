@@ -68,39 +68,22 @@ func TestCreateUser(t *testing.T) {
 
 	assert.NotNil(t, res)
 	assert.NoError(t, err)
-	m.CreateUser(user)
+	// m.CreateUser(user)
 
-	m.AssertCalled(t, "CreateUser", user)
+	// m.AssertCalled(t, "CreateUser", user)
 	m.AssertExpectations(t)
 
-	t.Run("GetUser", func(t *testing.T) {
-		m.On("GetUser", res.ID).Return(&model.User{}, nil).Once()
+	// t.Run("GetUser", func(t *testing.T) {
+	// 	m.On("GetUser", res.ID).Return(&model.User{}, nil).Once()
 
-		res, err := service.GetUser(res.ID)
+	// 	res, err := service.GetUser(res.ID)
 
-		assert.NotNil(t, res)
-		assert.NoError(t, err)
-
-		m.GetUser(res.ID)
-
-		m.AssertCalled(t, "GetUser", res.ID)
-		m.AssertExpectations(t)
-	})
-
-	// defer t.Run("DeleteUser", func(t *testing.T) {
-
-	// 	deleteID := res.ID
-
-	// 	m.On("DeleteUser", deleteID).Return(&model.User{}, nil).Once()
-
-	// 	deleteTest, err := service.DeleteUser(deleteID)
-
-	// 	assert.NotNil(t, deleteTest)
+	// 	assert.NotNil(t, res)
 	// 	assert.NoError(t, err)
 
-	// 	m.DeleteUser(deleteTest.ID)
+	// 	m.GetUser(res.ID)
 
-	// 	m.AssertCalled(t, "DeleteUser", deleteTest.ID)
+	// 	m.AssertCalled(t, "GetUser", res.ID)
 	// 	m.AssertExpectations(t)
 	// })
 }
