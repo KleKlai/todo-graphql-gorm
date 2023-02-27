@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/kleklai/todoAppv1/graph/model"
@@ -32,13 +33,14 @@ func (s *Service) CreateUser(user *model.CreateUserInput) (*model.User, error) {
 func (s *Service) GetUser(id string) (*model.User, error) {
 
 	if id == "" {
-		return nil, fmt.Errorf("ID is empty")
+		// return nil, fmt.Errorf("ID is empty")
+		return nil, errors.New("ID is empty")
 	}
 
 	res, err := s.repoService.GetUser(id)
 
 	if err != nil {
-		return nil, fmt.Errorf("User not found")
+		return nil, errors.New("User not found")
 	}
 
 	return res, nil
@@ -47,17 +49,17 @@ func (s *Service) GetUser(id string) (*model.User, error) {
 func (s *Service) DeleteUser(id string) (*model.User, error) {
 
 	if id == "" {
-		return nil, fmt.Errorf("ID is empty")
+		return nil, errors.New("ID is empty")
 	}
 
 	if _, err := s.repoService.GetUser(id); err != nil {
-		return nil, fmt.Errorf("User not found")
+		return nil, errors.New("User not found")
 	}
 
 	res, err := s.repoService.DeleteUser(id)
 
 	if err != nil {
-		return nil, fmt.Errorf("User not found")
+		return nil, errors.New("Error deleting user")
 	}
 
 	return res, nil

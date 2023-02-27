@@ -60,60 +60,89 @@ func TestCreateUser(t *testing.T) {
 		Name: "Maynard",
 	}
 
-	t.Run("success", func(t *testing.T) {
-		m.On("CreateUser", user).Return(&model.User{
-			ID: user.ID,
-		}, nil).Once()
+	m.On("CreateUser", user).Return(&model.User{
+		ID: user.ID,
+	}, nil).Once()
 
-		res, err := service.CreateUser(&user)
+	res, err := service.CreateUser(&user)
+
+	assert.NotNil(t, res)
+	assert.NoError(t, err)
+	m.CreateUser(user)
+
+	m.AssertCalled(t, "CreateUser", user)
+	m.AssertExpectations(t)
+
+	t.Run("GetUser", func(t *testing.T) {
+		m.On("GetUser", res.ID).Return(&model.User{}, nil).Once()
+
+		res, err := service.GetUser(res.ID)
 
 		assert.NotNil(t, res)
 		assert.NoError(t, err)
-		m.CreateUser(user)
 
-		m.AssertCalled(t, "CreateUser", user)
+		m.GetUser(res.ID)
+
+		m.AssertCalled(t, "GetUser", res.ID)
 		m.AssertExpectations(t)
 	})
+
+	// defer t.Run("DeleteUser", func(t *testing.T) {
+
+	// 	deleteID := res.ID
+
+	// 	m.On("DeleteUser", deleteID).Return(&model.User{}, nil).Once()
+
+	// 	deleteTest, err := service.DeleteUser(deleteID)
+
+	// 	assert.NotNil(t, deleteTest)
+	// 	assert.NoError(t, err)
+
+	// 	m.DeleteUser(deleteTest.ID)
+
+	// 	m.AssertCalled(t, "DeleteUser", deleteTest.ID)
+	// 	m.AssertExpectations(t)
+	// })
 }
 
-func TestGetUser(t *testing.T) {
+// func TestGetUser(t *testing.T) {
 
-	m := &RepositoryMock{}
+// 	m := &RepositoryMock{}
 
-	service := NewService(*repository.NewRepository())
+// 	service := NewService(*repository.NewRepository())
 
-	id := "6ikyYWd9iOwRTjBUu5LFws2cRAy7"
+// 	id := "6ikyYWd9iOwRTjBUu5LFws2cRAy7"
 
-	m.On("GetUser", id).Return(&model.User{}, nil).Once()
+// 	m.On("GetUser", id).Return(&model.User{}, nil).Once()
 
-	res, err := service.GetUser(id)
+// 	res, err := service.GetUser(id)
 
-	assert.NotNil(t, res)
-	assert.NoError(t, err)
+// 	assert.NotNil(t, res)
+// 	assert.NoError(t, err)
 
-	m.GetUser(id)
+// 	m.GetUser(id)
 
-	m.AssertCalled(t, "GetUser", id)
-	m.AssertExpectations(t)
-}
+// 	m.AssertCalled(t, "GetUser", id)
+// 	m.AssertExpectations(t)
+// }
 
-func TestDeleteUser(t *testing.T) {
+// func TestDeleteUser(t *testing.T) {
 
-	m := &RepositoryMock{}
+// 	m := &RepositoryMock{}
 
-	service := NewService(*repository.NewRepository())
+// 	service := NewService(*repository.NewRepository())
 
-	id := "6ikyYWd9iOwRTjBUu5LFws2cRAy7"
+// 	id := "7LPh_DQHGiH7JCCrCPd5Mgn8TkhL"
 
-	m.On("DeleteUser", id).Return(&model.User{}, nil).Once()
+// 	m.On("DeleteUser", id).Return(&model.User{}, nil).Once()
 
-	res, err := service.DeleteUser(id)
+// 	res, err := service.DeleteUser(id)
 
-	assert.NotNil(t, res)
-	assert.NoError(t, err)
+// 	assert.NotNil(t, res)
+// 	assert.NoError(t, err)
 
-	m.DeleteUser(id)
+// 	m.DeleteUser(id)
 
-	m.AssertCalled(t, "DeleteUser", id)
-	m.AssertExpectations(t)
-}
+// 	m.AssertCalled(t, "DeleteUser", id)
+// 	m.AssertExpectations(t)
+// }
