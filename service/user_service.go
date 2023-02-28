@@ -21,6 +21,11 @@ func (s *Service) CreateUser(user *model.CreateUserInput) (*model.User, error) {
 		Name: user.Name,
 	}
 
+	if u.ID == "" {
+		// return nil, fmt.Errorf("ID is empty")
+		return nil, errors.New("ID is empty")
+	}
+
 	res, err := s.repoService.CreateUser(u)
 
 	if err != nil {

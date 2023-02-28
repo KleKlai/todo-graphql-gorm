@@ -1,6 +1,8 @@
 package repository
 
-import "github.com/kleklai/todoAppv1/graph/model"
+import (
+	"github.com/kleklai/todoAppv1/graph/model"
+)
 
 func (r *Repository) CreateUser(user model.User) (*model.User, error) {
 
